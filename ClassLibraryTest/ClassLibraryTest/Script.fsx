@@ -26,9 +26,12 @@ let satisfies =
     <@ fun p -> query {
        for u in db.TblPerson do 
             if p u.FirstName then
-            yield p
+                yield u
     } @>
 
+query { 
+        yield! (%satisfies) (fun x -> x = "Renee") 
+} |> Seq.iter (fun row -> printfn "my test query: %s" row.FirstName)
 
 
 
